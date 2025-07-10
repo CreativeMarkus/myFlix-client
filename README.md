@@ -1,49 +1,32 @@
-myFlix Client
-The myFlix Client is a single-page React application that allows users to browse, search, and manage information about movies. It serves as the front-end for the myFlix API, which provides movie data, user authentication, and profile management.
+# myFlix Client
 
-Features
-User registration and login
+The **myFlix Client** is a single-page application (SPA) built with React that allows users to browse movies, view details, and manage their user profiles. It interacts with the myFlix API to provide dynamic content.
 
-Browse all movies
+## Features
 
-Filter movies by title
+- User registration and login
+- Browse a list of movies
+- View movie details (genre, director, description)
+- Add or remove movies from favorites
+- Update user profile or delete account
 
-View movie details, including genre and director
+## Technologies Used
 
-Add or remove movies from favorites
+- React
+- React Bootstrap
+- React Router DOM
 
-Edit user profile or delete account
+## Getting Started
 
-Built With
-React
+### Prerequisites
 
-React Router
+- Node.js (v14 or later)
+- npm (comes with Node.js)
 
-Axios
+### Installation
 
-Bootstrap
+1. Clone the repository:
 
-Parcel (build tool)
-
-JavaScript (ES6+)
-
-Getting Started
-Prerequisites
-Node.js (v14 or later recommended)
-
-npm or yarn
-
-Installation
-Clone the repository:
-
-bash
-Copy
-Edit
-git clone https://github.com/CreativeMarkus/myFlix-client.git
+```bash
+git clone https://github.com/your-username/myFlix-client.git
 cd myFlix-client
-Install dependencies:
-
-bash
-Copy
-Edit
-npm install
