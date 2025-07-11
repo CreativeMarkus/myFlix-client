@@ -1,65 +1,56 @@
-import { useState } from "react";
-import { BookCard } from "../book-card/book-card";
-import { BookView } from "../book-view/book-view";
+import React, { useState } from "react";
+import { MovieCard } from "../movie-card/movie-card";
+import { MovieView } from "../movie-view/movie-view";
 
 export const MainView = () => {
-    const [books, setBooks] = useState([
+    const [movies] = useState([
         {
             id: 1,
-            title: "Eloquent JavaScript",
-            image:
-                "https://images-na.ssl-images-amazon.com/images/I/51InjRPaF7L._SX377_BO1,204,203,200_.jpg",
-            author: "Marijn Haverbeke",
+            title: "Inception",
+            description: "A skilled thief enters people's dreams to steal ideas.",
+            image: "https://m.media-amazon.com/images/I/51v5ZpFyaFL._AC_.jpg",
+            genre: "Sci-Fi",
+            director: "Christopher Nolan",
         },
         {
             id: 2,
-            title: "Mastering JavaScript Functional Programming",
-            image:
-                "https://images-na.ssl-images-amazon.com/images/I/51WAikRq37L._SX218_BO1,204,203,200_QL40_FMwebp_.jpg",
-            author: "Federico Kereki",
+            title: "The Matrix",
+            description: "A hacker discovers reality is a simulation.",
+            image: "https://m.media-amazon.com/images/I/51EG732BV3L._AC_.jpg",
+            genre: "Action",
+            director: "The Wachowskis",
         },
         {
             id: 3,
-            title: "JavaScript: The Good Parts",
+            title: "Interstellar",
+            description: "A team explores a wormhole to save humanity.",
             image:
-                "https://images-na.ssl-images-amazon.com/images/I/5131OWtQRaL._SX381_BO1,204,203,200_.jpg",
-            author: "Douglas Crockford",
-        },
-        {
-            id: 4,
-            title: "JavaScript: The Definitive Guide",
-            image:
-                "https://images-na.ssl-images-amazon.com/images/I/51HbNW6RzhL._SX218_BO1,204,203,200_QL40_FMwebp_.jpg",
-            author: "David Flanagan",
-        },
-        {
-            id: 5,
-            title: "The Road to React",
-            image:
-                "https://images-na.ssl-images-amazon.com/images/I/41MBLi5a4jL._SX384_BO1,204,203,200_.jpg",
-            author: "Robin Wieruch",
+                "https://resizing.flixster.com/7c3qnZfPzZgID7Ft97PccFwEf9U=/206x305/v2/https://resizing.flixster.com/-XZAfHZM39UwaGJIFWKAE8fS0ak=/v3/t/assets/p10543523_p_v8_as.jpg",
+            genre: "Sci-Fi",
+            director: "Christopher Nolan",
         },
     ]);
 
-    const [selectedBook, setSelectedBook] = useState(null);
+    const [selectedMovie, setSelectedMovie] = useState(null);
 
-    if (selectedBook) {
+    if (selectedMovie) {
         return (
-            <BookView book={selectedBook} onBackClick={() => setSelectedBook(null)} />
+            <MovieView
+                movie={selectedMovie}
+                onBackClick={() => setSelectedMovie(null)}
+            />
         );
     }
 
     return (
         <div>
-            {books.map((book) => (
-                <BookCard
-                    key={book.id}
-                    book={book}
-                    onBookClick={(newSelectedBook) => {
-                        setSelectedBook(newSelectedBook);
-                    }}
+            {movies.map((movie) => (
+                <MovieCard
+                    key={movie.id}
+                    movie={movie}
+                    onMovieClick={setSelectedMovie}
                 />
             ))}
         </div>
     );
-}; 
+};
