@@ -29,6 +29,22 @@ export const MainView = () => {
             genre: "Sci-Fi",
             director: "Christopher Nolan",
         },
+        {
+            id: 4,
+            title: "The Dark Knight",
+            description: "Batman faces the Joker, a criminal mastermind wreaking havoc in Gotham.",
+            image: "https://m.media-amazon.com/images/I/71dwS9phhCL.jpg",
+            genre: "Action",
+            director: "Christopher Nolan",
+        },
+        {
+            id: 5,
+            title: "Avatar",
+            description: "A paraplegic Marine is sent to Pandora and becomes torn between two worlds.",
+            image: "https://m.media-amazon.com/images/I/41kTVLeW1CL._AC_.jpg",
+            genre: "Sci-Fi",
+            director: "James Cameron",
+        }
     ]);
 
     const [selectedMovie, setSelectedMovie] = useState(null);
