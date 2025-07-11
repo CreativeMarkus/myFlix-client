@@ -44,26 +44,22 @@ export const MainView = () => {
     const [selectedBook, setSelectedBook] = useState(null);
 
     if (selectedBook) {
-        return <BookView book={selectedBook} />;
-    }
-
-    if (books.length === 0) {
-        return <div>The list is empty!</div>;
+        return (
+            <BookView book={selectedBook} onBackClick={() => setSelectedBook(null)} />
+        );
     }
 
     return (
         <div>
-            <button
-                onClick={() => {
-                    alert("Nice!");
-                }}
-            >
-                Click me!
-            </button>
-
             {books.map((book) => (
-                <BookCard key={book.id} book={book} />
+                <BookCard
+                    key={book.id}
+                    book={book}
+                    onBookClick={(newSelectedBook) => {
+                        setSelectedBook(newSelectedBook);
+                    }}
+                />
             ))}
         </div>
     );
-};
+}; 
