@@ -1,15 +1,20 @@
+import React from 'react';
 import PropTypes from 'prop-types';
-import React from "react";
 
 export const MovieView = ({ movie, onBackClick }) => {
     return (
         <div>
+            <h1>{movie.Title}</h1>
+            <p>{movie.Description}</p>
             <button onClick={onBackClick}>Back</button>
-            <h2>{movie.title}</h2>
-            <img src={movie.image} alt={movie.title} />
-            <p>{movie.description}</p>
-            <p>Genre: {movie.genre}</p>
-            <p>Director: {movie.director}</p>
         </div>
     );
+};
+
+MovieView.propTypes = {
+    movie: PropTypes.shape({
+        Title: PropTypes.string.isRequired,
+        Description: PropTypes.string.isRequired,
+    }).isRequired,
+    onBackClick: PropTypes.func.isRequired
 };

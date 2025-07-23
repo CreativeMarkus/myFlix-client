@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from "react";
-import { MovieCard } from "../movie-card/movie-card";
-import { MovieView } from "../movie-view/movie-view";
+import React, { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
+import { MovieCard } from '../movie-card/movie-card';
+import { MovieView } from '../movie-view/movie-view';
 
 export const MainView = () => {
     const [movies, setMovies] = useState([]);
@@ -8,9 +9,18 @@ export const MainView = () => {
 
     useEffect(() => {
         fetch('https://movieapi1-683469e1d996.herokuapp.com/movies')
-            .then(response => response.json())
-            .then(data => console.log(data))
-            .catch(err => console.error(err));
+            .then((response) => {
+                if (!response.ok) {
+                    throw new Error('Failed to fetch movies');
+                }
+                return response.json();
+            })
+            .then((data) => {
+                setMovies(data);
+            })
+            .catch((error) => {
+                console.error('Error fetching movies:', error);
+            });
     }, []);
 
     if (selectedMovie) {
@@ -24,25 +34,19 @@ export const MainView = () => {
 
     return (
         <div>
-            {movies.map((movie) => (
-                <MovieCard
-                    key={movie._id}
-                    movie={movie}
-                    onMovieClick={(movie) => setSelectedMovie(movie)}
-                />
-            ))}
+            {movies.length === 0 ? (
+                <div>The list is empty!</div>
+            ) : (
+                movies.map((movie) => (
+                    <MovieCard
+                        key={movie._id}
+                        movie={movie}
+                        onMovieClick={(newSelectedMovie) => {
+                            setSelectedMovie(newSelectedMovie);
+                        }}
+                    />
+                ))
+            )}
         </div>
     );
-};
-import PropTypes from 'prop-types';
-
-MovieView.propTypes = {
-    movie: PropTypes.shape({
-        title: PropTypes.string.isRequired,
-        description: PropTypes.string.isRequired,
-        image: PropTypes.string.isRequired,
-        genre: PropTypes.string.isRequired,
-        director: PropTypes.string.isRequired,
-    }).isRequired,
-    onBackClick: PropTypes.func.isRequired,
 };
