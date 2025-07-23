@@ -1,52 +1,22 @@
-import React, { useState, useEffect } from 'react';
-import PropTypes from 'prop-types';
-import { MovieCard } from '../movie-card/movie-card';
-import { MovieView } from '../movie-view/movie-view';
+import React from "react";
+import PropTypes from "prop-types";
+import { Link } from "react-router-dom";
 
-export const MainView = () => {
-    const [movies, setMovies] = useState([]);
-    const [selectedMovie, setSelectedMovie] = useState(null);
-
-    useEffect(() => {
-        fetch('https://movieapi1-683469e1d996.herokuapp.com/movies')
-            .then((response) => {
-                if (!response.ok) {
-                    throw new Error('Failed to fetch movies');
-                }
-                return response.json();
-            })
-            .then((data) => {
-                setMovies(data);
-            })
-            .catch((error) => {
-                console.error('Error fetching movies:', error);
-            });
-    }, []);
-
-    if (selectedMovie) {
-        return (
-            <MovieView
-                movie={selectedMovie}
-                onBackClick={() => setSelectedMovie(null)}
-            />
-        );
-    }
+export const MainView = ({ movies }) => {
+    if (!movies || movies.length === 0) return <div>Loading movies...</div>;
 
     return (
         <div>
-            {movies.length === 0 ? (
-                <div>The list is empty!</div>
-            ) : (
-                movies.map((movie) => (
-                    <MovieCard
-                        key={movie._id}
-                        movie={movie}
-                        onMovieClick={(newSelectedMovie) => {
-                            setSelectedMovie(newSelectedMovie);
-                        }}
-                    />
-                ))
-            )}
+            {movies.map((movie) => (
+                <div key={movie._id}>
+                    <h2>{movie.Title}</h2>
+                    <Link to={`/movies/${movie._id}`}>View Details</Link>
+                </div>
+            ))}
         </div>
     );
+};
+
+MainView.propTypes = {
+    movies: PropTypes.array.isRequired,
 };
