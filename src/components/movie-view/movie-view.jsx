@@ -1,29 +1,29 @@
-import React from "react";
-import PropTypes from "prop-types";
-import { useParams } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { useParams, useNavigate } from "react-router-dom";
 
-export const MovieView = ({ movies, onBackClick }) => {
+const MovieView = () => {
     const { movieId } = useParams();
-    const movie = movies?.find((m) => m._id === movieId);
+    const [movie, setMovie] = useState(null);
+    const navigate = useNavigate();
 
-    if (!movie) return <div>Loading movie...</div>;
+    useEffect(() => {
+        fetch(`https://movieapi1-683469e1d996.herokuapp.com/movies/${movieId}`)
+            .then((response) => response.json())
+            .then((data) => setMovie(data))
+            .catch((error) => console.error(error));
+    }, [movieId]);
+
+    if (!movie) return <div>Loading...</div>;
 
     return (
-        <div>
+        <div className="movie-view">
+            <button onClick={() => navigate(-1)}>Back</button>
             <h1>{movie.Title}</h1>
+            <img src={movie.ImagePath} alt={`${movie.Title} poster`} />
             <p>{movie.Description}</p>
-            <button onClick={onBackClick}>Back</button>
+            {/* Add other movie details here as needed */}
         </div>
     );
 };
 
-MovieView.propTypes = {
-    movies: PropTypes.arrayOf(
-        PropTypes.shape({
-            _id: PropTypes.string.isRequired,
-            Title: PropTypes.string.isRequired,
-            Description: PropTypes.string.isRequired,
-        })
-    ).isRequired,
-    onBackClick: PropTypes.func.isRequired,
-};
+export default MovieView;
