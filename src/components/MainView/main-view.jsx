@@ -9,7 +9,7 @@ const MainView = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        fetch('https://movieapi1-683469e1d996.herokuapp.com/movies', {
+        fetch('https://movieapi1-683469e1d996.herokuapp.com/', {
             headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
         })
             .then((response) => response.json())
