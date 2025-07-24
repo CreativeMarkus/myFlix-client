@@ -1,39 +1,37 @@
-import React, { useState, useEffect } from 'react';
-import { MovieCard } from './MovieCard';
-import axios from 'axios';
-import './MainView.css';
+import React, { useState, useEffect } from "react";
+import PropTypes from "prop-types";
+import { MovieCard } from "../movie-card/movie-card";
+import { MovieView } from "../movie-view/movie-view";
 
 export const MainView = () => {
     const [movies, setMovies] = useState([]);
-    const [isLoading, setIsLoading] = useState(true);
-    const [error, setError] = useState(null);
+    const [selectedMovie, setSelectedMovie] = useState(null);
 
     useEffect(() => {
-        const fetchMovies = async () => {
-            try {
-                const response = await axios.get('https://movieapi1-683469e1d996.herokuapp.com/movies');
-                setMovies(response.data);
-            } catch (err) {
-                setError(err.message);
-            } finally {
-                setIsLoading(false);
-            }
-        };
-
-        fetchMovies();
+        fetch("https://movieapi1.herokuapp.com/movies")
+            .then((response) => response.json())
+            .then((data) => setMovies(data))
+            .catch((error) => console.error("Error fetching movies:", error));
     }, []);
 
-    if (isLoading) return <div className="loading-spinner">Loading...</div>;
-    if (error) return <div className="error-message">Error: {error}</div>;
+    if (selectedMovie) {
+        return (
+            <MovieView
+                movie={selectedMovie}
+                onBackClick={() => setSelectedMovie(null)}
+            />
+        );
+    }
 
     return (
-        <div className="main-view">
-            <h1>Featured Movies</h1>
-            <div className="movie-grid">
-                {movies.map((movie) => (
-                    <MovieCard key={movie._id} movie={movie} />
-                ))}
-            </div>
+        <div>
+            {movies.map((movie) => (
+                <MovieCard
+                    key={movie._id}
+                    movie={movie}
+                    onMovieClick={(movie) => setSelectedMovie(movie)}
+                />
+            ))}
         </div>
     );
 };

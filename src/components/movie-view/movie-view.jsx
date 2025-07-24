@@ -1,30 +1,38 @@
-import React, { useEffect, useState } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import React from "react";
+import PropTypes from "prop-types";
 
-const MovieView = () => {
-    const { movieId } = useParams();
-    const [movie, setMovie] = useState(null);
-    const navigate = useNavigate();
-
-    useEffect(() => {
-        fetch(`https://movieapi1-6864726ab877.herokuapp.com/movies/${movieId}`)
-            .then((res) => res.json())
-            .then((data) => setMovie(data))
-            .catch((err) => console.error('Failed to load movie:', err));
-    }, [movieId]);
-
-    if (!movie) return <div>Loading movie...</div>;
-
+export const MovieView = ({ movie, onBackClick }) => {
     return (
-        <div style={{ padding: '20px' }}>
-            <h2>{movie.Title}</h2>
-            <img src={movie.ImagePath} alt={movie.Title} style={{ width: '300px' }} />
-            <p><strong>Description:</strong> {movie.Description}</p>
-            <p><strong>Genre:</strong> {movie.Genre?.Name}</p>
-            <p><strong>Director:</strong> {movie.Director?.Name}</p>
-            <button onClick={() => navigate(-1)}>← Back</button>
+        <div style={{ padding: "20px", maxWidth: "600px", margin: "auto" }}>
+            <img
+                src={movie.ImagePath}
+                alt={movie.Title}
+                style={{ width: "100%", borderRadius: "8px" }}
+            />
+            <h1>{movie.Title}</h1>
+            <p>{movie.Description}</p>
+
+            <button
+                onClick={onBackClick}
+                style={{
+                    marginTop: "20px",
+                    padding: "10px 20px",
+                    fontSize: "16px",
+                    cursor: "pointer",
+                }}
+            >
+                Back
+            </button>
         </div>
     );
 };
 
-export default MovieView;
+MovieView.propTypes = {
+    movie: PropTypes.shape({
+        _id: PropTypes.string.isRequired,
+        Title: PropTypes.string.isRequired,
+        Description: PropTypes.string,
+        ImagePath: PropTypes.string,
+    }).isRequired,
+    onBackClick: PropTypes.func.isRequired,
+};

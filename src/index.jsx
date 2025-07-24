@@ -1,11 +1,16 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import { BrowserRouter } from 'react-router-dom';
-import MainView from './components/MainView';
+import React from "react";
+import ReactDOM from "react-dom/client";
+import { MainView } from "./main-view/main-view";
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(
-    <BrowserRouter>
-        <MainView />
-    </BrowserRouter>
-);
+const App = () => {
+  return (
+    <div>
+      <h1 style={{ textAlign: "center" }}>MyFlix Movies</h1>
+      <MainView />
+    </div>
+  );
+};
+
+const container = document.getElementById("root");
+const root = ReactDOM.createRoot(container);
+root.render(<App />);
