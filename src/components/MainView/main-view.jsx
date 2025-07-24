@@ -1,22 +1,47 @@
-import React from "react";
-import PropTypes from "prop-types";
-import { Link } from "react-router-dom";
+import React, { useState, useEffect } from 'react';
+import { useNavigate, Routes, Route } from 'react-router-dom';
+import MovieCard from './MovieCard';
+import MovieView from './MovieView';
+import './main-view.scss';
 
-export const MainView = ({ movies }) => {
-    if (!movies || movies.length === 0) return <div>Loading movies...</div>;
+const MainView = () => {
+    const [movies, setMovies] = useState([]);
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        fetch('https://movieapi1-683469e1d996.herokuapp.com/movies', {
+            headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
+        })
+            .then((response) => response.json())
+            .then((data) => setMovies(data))
+            .catch((error) => console.error(error));
+    }, []);
+
+    const handleMovieClick = (movie) => {
+        navigate(`/movies/${movie._id}`);
+    };
 
     return (
-        <div>
-            {movies.map((movie) => (
-                <div key={movie._id}>
-                    <h2>{movie.Title}</h2>
-                    <Link to={`/movies/${movie._id}`}>View Details</Link>
-                </div>
-            ))}
+        <div className="main-view">
+            <Routes>
+                <Route
+                    path="/"
+                    element={
+                        <div className="movies-list">
+                            {movies.map((movie) => (
+                                <MovieCard
+                                    key={movie._id}
+                                    movie={movie}
+                                    onMovieClick={handleMovieClick}
+                                />
+                            ))}
+                        </div>
+                    }
+                />
+                <Route path="/movies/:movieId" element={<MovieView />} />
+            </Routes>
         </div>
     );
 };
 
-MainView.propTypes = {
-    movies: PropTypes.array.isRequired,
-};
+export default MainView;

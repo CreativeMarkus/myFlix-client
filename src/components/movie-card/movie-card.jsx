@@ -1,20 +1,30 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 
-export const MovieCard = ({ movie, onMovieClick }) => {
+import './movie-card.scss';
+
+const MovieCard = ({ movie, onMovieClick }) => {
     return (
-        <div onClick={() => onMovieClick(movie)}>
-            <h3>{movie.Title}</h3>
-            <p>{movie.Description}</p>
+        <div className="movie-card" onClick={() => onMovieClick(movie)}>
+            <img src={movie.ImagePath} alt={`${movie.Title} poster`} />
+            <div className="movie-card-body">
+                <h2>{movie.Title}</h2>
+                <p>{movie.Description}</p>
+                <Link to={`/movies/${movie._id}`}>More Info</Link>
+            </div>
         </div>
     );
 };
 
 MovieCard.propTypes = {
     movie: PropTypes.shape({
-        _id: PropTypes.string.isRequired,
         Title: PropTypes.string.isRequired,
         Description: PropTypes.string.isRequired,
+        ImagePath: PropTypes.string.isRequired,
+        _id: PropTypes.string.isRequired,
     }).isRequired,
-    onMovieClick: PropTypes.func.isRequired
+    onMovieClick: PropTypes.func.isRequired,
 };
+
+export default MovieCard;
