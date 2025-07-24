@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import PropTypes from "prop-types";
-
 import MovieCard from "./MovieCard";
 
 const MainView = () => {
@@ -10,7 +8,6 @@ const MainView = () => {
 
     useEffect(() => {
         const token = localStorage.getItem("token");
-
         if (!token) {
             console.error("No token found, please login first");
             return;
@@ -34,24 +31,16 @@ const MainView = () => {
     };
 
     return (
-        <div className="main-view">
+        <div>
             {movies.length === 0 ? (
-                <div>Loading movies...</div>
+                <p>Loading movies...</p>
             ) : (
                 movies.map((movie) => (
-                    <MovieCard
-                        key={movie._id}
-                        movie={movie}
-                        onMovieClick={() => handleMovieClick(movie._id)}
-                    />
+                    <MovieCard key={movie._id} movie={movie} onMovieClick={handleMovieClick} />
                 ))
             )}
         </div>
     );
-};
-
-MainView.propTypes = {
-    movies: PropTypes.array,
 };
 
 export default MainView;

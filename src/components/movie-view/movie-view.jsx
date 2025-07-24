@@ -13,15 +13,13 @@ const MovieView = () => {
             .catch((error) => console.error(error));
     }, [movieId]);
 
-    if (!movie) return <div>Loading...</div>;
+    if (!movie) return <p>Loading...</p>;
 
     return (
-        <div className="movie-view">
+        <div>
             <button onClick={() => navigate(-1)}>Back</button>
-            <h1>{movie.Title}</h1>
-            <img src={movie.ImagePath} alt={`${movie.Title} poster`} />
+            <h2>{movie.Title}</h2>
             <p>{movie.Description}</p>
-            {/* Add other movie details here as needed */}
         </div>
     );
 };
