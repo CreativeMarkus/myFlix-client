@@ -8,11 +8,15 @@ export const MainView = () => {
     const [selectedMovie, setSelectedMovie] = useState(null);
 
     useEffect(() => {
-        fetch("https://movieapi1.herokuapp.com/movies")
+        fetch("https://movieapi1-683469e1d996.herokuapp.com/movies")
             .then((response) => response.json())
             .then((data) => setMovies(data))
             .catch((error) => console.error("Error fetching movies:", error));
     }, []);
+
+    if (movies.length === 0) {
+        return <div>Loading movies...</div>;
+    }
 
     if (selectedMovie) {
         return (
