@@ -12,10 +12,13 @@
   },
   "license": "ISC",
   "author": "Mark Francis",
-  "type": "commonjs",
+  "engines": {
+    "node": "22.x"
+  },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "serve -s build",
     "build": "react-scripts build",
+    "heroku-postbuild": "npm install && npm run build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
@@ -26,7 +29,7 @@
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.30.1",
     "react-scripts": "^5.0.1",
-    "serve": "^14.2.4"
+    "serve": "^14.2.0"
   },
   "devDependencies": {
     "@parcel/transformer-sass": "^2.15.4"
