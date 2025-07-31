@@ -5,10 +5,6 @@ import "bootstrap/dist/css/bootstrap.min.css";
 
 import { MovieCard } from "../movie-card/movie-card";
 import { MovieView } from "../movie-view/movie-view";
-import { LoginView } from "../login-view/login-view";
-import { SignupView } from "../SignupView/signup-view";
-import { NavigationBar } from "../navigation-bar/navigation-bar";
-import { ProfileView } from "../profile-view/profile-view";
 
 export const MainView = () => {
     const storedUser = JSON.parse(localStorage.getItem("user"));
