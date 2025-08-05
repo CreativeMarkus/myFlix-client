@@ -15,7 +15,7 @@
     "node": "22.x"
   },
   "scripts": {
-    "start": "serve -s build",
+    "start": "serve -s build --single",
     "build": "react-scripts build",
     "heroku-postbuild": "npm install && npm run build",
     "test": "react-scripts test",
