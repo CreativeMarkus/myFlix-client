@@ -5,9 +5,10 @@ import "bootstrap/dist/css/bootstrap.min.css";
 
 import { MovieCard } from "../movie-card/movie-card";
 import { MovieView } from "../movie-view/movie-view";
-import NavigationBar from '../navigation-bar/navigation-bar.jsx';
-import { SignupView } from "../signup-view/signup-view";
-
+import NavigationBar from '../navigation-bar/navigation-bar..jsx';
+import { SignupView } from "../signup-view/signup-view.jsx";
+import { LoginView } from "../login-view/login-view";
+import { ProfileView } from "../profile-view/profile-view";
 
 export const MainView = () => {
     const storedUser = JSON.parse(localStorage.getItem("user"));
@@ -25,12 +26,13 @@ export const MainView = () => {
         })
             .then((response) => response.json())
             .then((data) => {
+                // Corrected mapping to match backend's capitalized fields
                 const moviesFromApi = data.map((movie) => ({
                     _id: movie._id,
-                    title: movie.title,
-                    description: movie.description,
-                    director: movie.director,
-                    genre: movie.genre,
+                    title: movie.Title, // Map backend's Title to frontend's title
+                    description: movie.Description, // Map backend's Description to frontend's description
+                    director: movie.Director.Name, // Map backend's Director.Name to frontend's director
+                    genre: movie.Genre.Name, // Map backend's Genre.Name to frontend's genre
                 }));
                 setMovies(moviesFromApi);
             })
@@ -101,7 +103,8 @@ export const MainView = () => {
                                 <Col>The list is empty!</Col>
                             ) : (
                                 <Col md={8}>
-                                    <MovieView />
+                                    {/* Pass the movies prop to MovieView */}
+                                    <MovieView movies={movies} />
                                 </Col>
                             )
                         }
