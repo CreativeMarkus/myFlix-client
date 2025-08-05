@@ -68,8 +68,8 @@ export const SignupView = ({ onLoggedIn }) => {
                     type="text"
                     value={username}
                     onChange={(e) => setUsername(e.target.value)}
-                    required // Make field mandatory
-                    minLength="3" // Minimum length for username
+                    required 
+                    minLength="3" 
                 />
             </Form.Group>
 
@@ -80,7 +80,7 @@ export const SignupView = ({ onLoggedIn }) => {
                     type="password"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
-                    required // Make field mandatory
+                    required 
                 />
             </Form.Group>
 

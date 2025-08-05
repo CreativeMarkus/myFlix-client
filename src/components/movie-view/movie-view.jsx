@@ -1,8 +1,7 @@
 import React from "react";
-import { useParams } from "react-router-dom";
-import { Link } from "react-router-dom";
-import PropTypes from 'prop-types';
-
+import { useParams, Link } from "react-router-dom";
+import PropTypes from "prop-types";
+import { Card, Button } from "react-bootstrap";
 
 export const MovieView = ({ movies }) => {
     const { movieId } = useParams();
@@ -14,31 +13,25 @@ export const MovieView = ({ movies }) => {
     }
 
     return (
-        <div>
-            <div>
-                <span>Title: </span>
-                <span>{movie.title}</span>
-            </div>
-            <div>
-                <span>Genre: </span>
-                <span>{movie.genre}</span>
-            </div>
-            <div>
-                <span>Director: </span>
-                <span>{movie.director}</span>
-            </div>
-            <div>
-                <span>Description: </span>
-                <span>{movie.description}</span>
-            </div>
-            <Link to={`/`}>
-                <button
-                    className="back-button"
-                    style={{ cursor: "pointer" }}
-                >Back</button>
-            </Link>
-        </div>
-    )
+        <Card className="mt-3">
+            {movie.imagePath && (
+                <Card.Img
+                    variant="top"
+                    src={movie.imagePath.startsWith("http") ? movie.imagePath : `https://your-image-base-url.com/${movie.imagePath}`}
+                    alt={movie.title}
+                />
+            )}
+            <Card.Body>
+                <Card.Title>{movie.title}</Card.Title>
+                <Card.Subtitle className="mb-2 text-muted">{movie.genre}</Card.Subtitle>
+                <Card.Text><strong>Director:</strong> {movie.director}</Card.Text>
+                <Card.Text>{movie.description}</Card.Text>
+                <Link to="/">
+                    <Button variant="primary">Back</Button>
+                </Link>
+            </Card.Body>
+        </Card>
+    );
 };
 
 MovieView.propTypes = {
@@ -49,7 +42,7 @@ MovieView.propTypes = {
             genre: PropTypes.string.isRequired,
             director: PropTypes.string.isRequired,
             description: PropTypes.string.isRequired,
+            imagePath: PropTypes.string,
         })
     ).isRequired,
 };
-
