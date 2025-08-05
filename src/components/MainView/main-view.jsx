@@ -5,6 +5,10 @@ import "bootstrap/dist/css/bootstrap.min.css";
 
 import { MovieCard } from "../movie-card/movie-card";
 import { MovieView } from "../movie-view/movie-view";
+import { NavigationBar } from "../navigation-bar/navigation-bar";
+import { SignupView } from "../signup-view/signup-view";
+import { LoginView } from "../login-view/login-view";
+import { ProfileView } from "../profile-view/profile-view";
 
 export const MainView = () => {
     const storedUser = JSON.parse(localStorage.getItem("user"));
@@ -15,9 +19,7 @@ export const MainView = () => {
     const [movies, setMovies] = useState([]);
 
     useEffect(() => {
-        if (!token) {
-            return;
-        }
+        if (!token) return;
 
         fetch("https://movieapi1-683469e1d996.herokuapp.com/movies", {
             headers: { Authorization: `Bearer ${token}` },
@@ -25,15 +27,15 @@ export const MainView = () => {
             .then((response) => response.json())
             .then((data) => {
                 const moviesFromApi = data.map((movie) => ({
-                    id: movie._id,
+                    _id: movie._id,
                     title: movie.title,
                     description: movie.description,
                     director: movie.director,
                     genre: movie.genre,
                 }));
-
                 setMovies(moviesFromApi);
-            });
+            })
+            .catch((error) => console.error("Fetch error:", error));
     }, [token]);
 
     const handleLoggedOut = () => {
@@ -115,7 +117,7 @@ export const MainView = () => {
                             ) : (
                                 <>
                                     {movies.map((movie) => (
-                                        <Col className="mb-4" key={movie.id} md={3}>
+                                        <Col className="mb-4" key={movie._id} md={3}>
                                             <MovieCard movie={movie} />
                                         </Col>
                                     ))}
